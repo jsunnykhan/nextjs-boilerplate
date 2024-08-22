@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetAllTodosQuery } from '@/store/services/Todo';
+import { useGetAllTodosQuery } from '@/services/Todo';
 
 export default function Home() {
   const { data, isLoading, isError } = useGetAllTodosQuery();
