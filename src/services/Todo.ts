@@ -1,13 +1,15 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import axiosBaseQuery from '@/lib/HttpClient';
+import { createApi } from '@reduxjs/toolkit/query/react';
 
 export const TodoApi = createApi({
   reducerPath: 'todo',
-  baseQuery: fetchBaseQuery({ baseUrl: '/api/todo' }),
+  baseQuery: axiosBaseQuery({ baseUrl: '/health' }),
   endpoints: (builder) => ({
     getAllTodos: builder.query<any, void>({
       query: () => ({
         url: '/',
         method: 'GET',
+        useAuth: false,
       }),
     }),
   }),
