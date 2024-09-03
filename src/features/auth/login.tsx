@@ -1,28 +1,26 @@
-"use client";
+'use client';
 
-import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
-import { useForm } from "react-hook-form";
+import { signIn } from 'next-auth/react';
+import { useForm } from 'react-hook-form';
 
-const SignInPage = () => {
-  const params = useSearchParams();
-  const callbackUrl = params.get("callbackUrl");
+const LoginPage = () => {
+  // const params = useSearchParams();
+  // const callbackUrl = params.get('callbackUrl');
 
   const { handleSubmit, register } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       rememberMe: false,
     },
   });
 
   const submitSigningHandler = async ({ email, password, rememberMe }: any) => {
     try {
-      await signIn("credentials", {
+      await signIn('credentials', {
         email,
         password,
-        callbackUrl: callbackUrl || window.location.origin,
+        // callbackUrl: callbackUrl || window.location.origin,
         redirect: false,
       });
     } catch (error: any) {}
@@ -34,7 +32,11 @@ const SignInPage = () => {
         <h1 className="text-2xl font-bold text-center mb-4 dark:text-gray-200">
           Welcome Back!
         </h1>
-        <form target="#" noValidate onSubmit={handleSubmit(submitSigningHandler)}>
+        <form
+          target="#"
+          noValidate
+          onSubmit={handleSubmit(submitSigningHandler)}
+        >
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Email Address
@@ -43,9 +45,9 @@ const SignInPage = () => {
               type="email"
               id="email"
               className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="your@email.com"
+              placeholder="email@example.com"
               required
-              {...register("email")}
+              {...register('email')}
             />
           </div>
           <div className="mb-4">
@@ -58,7 +60,7 @@ const SignInPage = () => {
               className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="Enter your password"
               required
-              {...register("password")}
+              {...register('password')}
             />
             <a
               onClick={() => {}}
@@ -73,7 +75,7 @@ const SignInPage = () => {
                 type="checkbox"
                 id="remember"
                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 focus:outline-none"
-                {...register("rememberMe")}
+                {...register('rememberMe')}
               />
               <label className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
                 Remember me
@@ -99,4 +101,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default LoginPage;

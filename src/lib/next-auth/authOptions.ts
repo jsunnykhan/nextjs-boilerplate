@@ -10,18 +10,21 @@ export const nextAuthOptions: NextAuthOptions = {
         password: { label: 'password', type: 'password' },
       },
       async authorize(credentials, req) {
-        console.log("sdas -----------" ,credentials , req)
-        const jsonRes =await  fetch(process.env.API_BASE_URl+'/api/v1/login' , {
-          body: JSON.stringify({
-            email : credentials?.email,
-            password : credentials?.password
-          })
-        })
+        console.log('sdas -----------', credentials, req);
+        const jsonRes = await fetch(
+          process.env.API_BASE_URl + '/api/v1/login',
+          {
+            body: JSON.stringify({
+              email: credentials?.email,
+              password: credentials?.password,
+            }),
+          }
+        );
 
-        const response = await jsonRes.json()
+        const response = await jsonRes.json();
 
-        if(response.ok){
-          return response
+        if (response.ok) {
+          return response;
         }
         return null;
       },
@@ -42,8 +45,8 @@ export const nextAuthOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: '/signin',
-    signOut: '/signout',
+    signIn: '/login',
+    // signOut: '/signout',
   },
 };
 
