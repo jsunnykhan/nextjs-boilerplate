@@ -8,10 +8,10 @@ export default function Home() {
   console.log({ data, isLoading, isError });
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {data &&
+      {/* {data &&
         data.map((todo: any, index: number) => (
           <div key={index}>{todo.title}</div>
-        ))}
+        ))} */}
     </main>
   );
 }
