@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '../styles/globals.css';
-import ReduxWrapper from '@/providers/ReduxWrapper';
+import ReduxWrapper from '@/lib/providers/ReduxWrapper';
+import NextAuthSessionProvider from '@/lib/providers/NextAuthSessionProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <ReduxWrapper>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+        </body>
       </html>
     </ReduxWrapper>
   );

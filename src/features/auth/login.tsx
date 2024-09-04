@@ -1,12 +1,9 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
+import { credentialsSigning } from '@/lib/actions/authenticate';
 import { useForm } from 'react-hook-form';
 
 const LoginPage = () => {
-  // const params = useSearchParams();
-  // const callbackUrl = params.get('callbackUrl');
-
   const { handleSubmit, register } = useForm({
     defaultValues: {
       email: '',
@@ -15,15 +12,16 @@ const LoginPage = () => {
     },
   });
 
-  const submitSigningHandler = async ({ email, password, rememberMe }: any) => {
+  const handleSigning = async ({ email, password, rememberMe }: any) => {
     try {
-      await signIn('credentials', {
-        email,
-        password,
-        // callbackUrl: callbackUrl || window.location.origin,
-        redirect: false,
-      });
-    } catch (error: any) {}
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('password', password);
+       await credentialsSigning(formData);
+      
+    } catch (error: any) {
+      console.error('error', error);
+    }
   };
 
   return (
@@ -32,11 +30,7 @@ const LoginPage = () => {
         <h1 className="text-2xl font-bold text-center mb-4 dark:text-gray-200">
           Welcome Back!
         </h1>
-        <form
-          target="#"
-          noValidate
-          onSubmit={handleSubmit(submitSigningHandler)}
-        >
+        <form noValidate target="#" onSubmit={handleSubmit(handleSigning)}>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Email Address

@@ -1,17 +1,13 @@
 'use client';
-
-import { useGetAllTodosQuery } from '@/services/Todo';
+import { useSession } from 'next-auth/react';
 
 export default function Home() {
-  const { data, isLoading, isError } = useGetAllTodosQuery();
-
-  console.log({ data, isLoading, isError });
+  // const session = await auth();
+  const { data: session } = useSession();
+  console.log('sessions', session);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {/* {data &&
-        data.map((todo: any, index: number) => (
-          <div key={index}>{todo.title}</div>
-        ))} */}
+      <button className="bg-green-600">Hello</button>
     </main>
   );
 }
