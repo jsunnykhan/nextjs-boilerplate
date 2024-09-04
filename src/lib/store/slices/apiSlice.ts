@@ -1,7 +1,6 @@
-import axiosBaseQuery from '@/lib/HttpClient';
-import { createApi } from '@reduxjs/toolkit/query';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import axiosBaseQuery from '../HttpClient';
 
-const API_BASE_URL = process.env.API_BASE_URL;
 const API_TAG_TYPE: string[] = [];
 
 export const apiSlice = createApi({

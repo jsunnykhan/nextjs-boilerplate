@@ -1,5 +1,5 @@
-import { HttpClient } from '@/lib/HttpClient';
 import { TokenInfo } from '@/lib/next-auth/token';
+import { HttpClient } from '@/lib/store/HttpClient';
 
 export class AuthService {
   private readonly client;

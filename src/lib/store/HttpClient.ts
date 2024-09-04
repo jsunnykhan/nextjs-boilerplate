@@ -1,4 +1,3 @@
-import { auth } from '@/auth';
 import { ensureTrailingSlash } from '@/utils/helper';
 import { BaseQueryFn } from '@reduxjs/toolkit/query';
 import axios, {
@@ -34,11 +33,14 @@ export class HttpClient {
     });
     this.client.interceptors.request.use(
       async (config: InternalAxiosRequestConfig<any>) => {
-        const session = await auth();
+        console.log('------------from config -------------', config.session);
+        const account: any = config.session;
+        const isLoggedIn = account?.user;
+
         config.headers.Accept = 'application/json';
         config.headers['Content-Type'] = 'application/json';
-        if (session) {
-          config.headers.Authorization = `Bearer ${session?.access}`;
+        if (isLoggedIn) {
+          config.headers.Authorization = `Bearer ${account?.accessToken}`;
         }
         return config;
       }

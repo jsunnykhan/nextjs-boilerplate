@@ -1,9 +1,10 @@
 import NextAuth, { Session, User } from 'next-auth';
 
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { AuthService } from './services/auth-service';
-import { TokenInfo } from './lib/next-auth/token';
+
 import { JWT } from 'next-auth/jwt';
+import { AuthService } from '@/services/auth-service';
+import { TokenInfo } from './token';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -50,8 +51,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       token: any | TokenInfo | JWT;
       user: User;
     }) {
-      // console.log({ session, token, user });
-
+  
       if (token) {
         const tokenInfo: TokenInfo = token;
         if (tokenInfo.claims.exp * 1000 > Date.now()) {
