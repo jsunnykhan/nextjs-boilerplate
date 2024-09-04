@@ -1,3 +1,4 @@
+import { auth } from '@/auth';
 import { ensureTrailingSlash } from '@/utils/helper';
 import { BaseQueryFn } from '@reduxjs/toolkit/query';
 import axios, {
@@ -33,14 +34,12 @@ export class HttpClient {
     });
     this.client.interceptors.request.use(
       async (config: InternalAxiosRequestConfig<any>) => {
-        // add auth header with jwt if account is logged in and request is to the api url
-        const account: any = config.session;
-        const isLoggedIn = account?.user;
-
-        if (isLoggedIn) {
-          config.headers.Authorization = `Bearer ${account?.access}`;
+        const session = await auth();
+        config.headers.Accept = 'application/json';
+        config.headers['Content-Type'] = 'application/json';
+        if (session) {
+          config.headers.Authorization = `Bearer ${session?.access}`;
         }
-
         return config;
       }
     );
@@ -95,6 +94,7 @@ const axiosBaseQuery =
           method,
           data,
           session,
+          useAuth,
         });
         return { data: result.data };
       } catch (error) {
