@@ -33,15 +33,15 @@ export class HttpClient {
     });
     this.client.interceptors.request.use(
       async (config: InternalAxiosRequestConfig<any>) => {
-        console.log('------------from config -------------', config.session);
-        const account: any = config.session;
-        const isLoggedIn = account?.user;
+        // console.log('------------from config -------------', config.session);
+        // const account: any = config.session;
+        // const isLoggedIn = account?.user;
 
-        config.headers.Accept = 'application/json';
-        config.headers['Content-Type'] = 'application/json';
-        if (isLoggedIn) {
-          config.headers.Authorization = `Bearer ${account?.accessToken}`;
-        }
+        // config.headers.Accept = 'application/json';
+        // config.headers['Content-Type'] = 'application/json';
+        // if (isLoggedIn) {
+        //   config.headers.Authorization = `Bearer ${account?.accessToken}`;
+        // }
         return config;
       }
     );

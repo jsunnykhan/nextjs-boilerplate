@@ -6,7 +6,6 @@ const healthService = apiSlice.injectEndpoints({
       query: () => ({
         url: '/health',
         method: 'GET',
-        useAuth: true,
       }),
     }),
   }),
