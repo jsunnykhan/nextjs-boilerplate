@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../HttpClient';
 
-const API_TAG_TYPE: string[] = [];
+const API_TAG_TYPE: string[] = ['users'];
 
 export const apiSlice = createApi({
   reducerPath: 'api',
