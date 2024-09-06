@@ -7,6 +7,8 @@ import axios, {
   InternalAxiosRequestConfig,
 } from 'axios';
 import { Session } from 'next-auth';
+import { getSession } from 'next-auth/react';
+import { setSession } from './slices/authenticateSlice';
 
 export type Response<T> = {
   status?: number;
@@ -33,15 +35,15 @@ export class HttpClient {
     });
     this.client.interceptors.request.use(
       async (config: InternalAxiosRequestConfig<any>) => {
-        // console.log('------------from config -------------', config.session);
-        // const account: any = config.session;
-        // const isLoggedIn = account?.user;
+        const account: any = config.session;
+        const isLoggedIn = account?.user;
 
-        // config.headers.Accept = 'application/json';
-        // config.headers['Content-Type'] = 'application/json';
-        // if (isLoggedIn) {
-        //   config.headers.Authorization = `Bearer ${account?.accessToken}`;
-        // }
+        config.headers.Accept = 'application/json';
+        config.headers['Content-Type'] = 'application/json';
+        if (isLoggedIn) {
+          config.headers.Authorization = `Bearer ${account?.access}`;
+        }
+
         return config;
       }
     );
@@ -113,7 +115,16 @@ const axiosBaseQuery =
         });
       }
     );
-    return await fetch();
+
+    const state = getState();
+    let session = state.auth.session;
+    if ((useAuth || useGlobalAuth) && !session) {
+      session = await getSession();
+      if (session) {
+        dispatch(setSession(session));
+      }
+    }
+    return await fetch(session);
   };
 
 export default axiosBaseQuery;
